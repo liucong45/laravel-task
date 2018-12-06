@@ -13,7 +13,7 @@
                 <span aria-hidden="true">&times;</span>
             </button>
             </div>
-            {!! Form::open(['route'=>'projects.store']) !!}
+            {!! Form::open(['route'=>'projects.store','files'=>true,'method'=>'POST']) !!}
             <div class="modal-body">
             <!-- <form action='/' method='POST' accept-charset="UTF-8">
             <div class="form-group">
