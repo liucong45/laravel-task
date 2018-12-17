@@ -4,9 +4,18 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Image;
+use App\Repositories\ProjectsRepository;
 
 class ProjectsController extends Controller
 {
+
+    protected $repo;
+
+    public function __construct(ProjectsRepository $repo)
+    {
+       $this->repo = $repo; 
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -35,24 +44,9 @@ class ProjectsController extends Controller
      */
     public function store(Request $request)
     {
-        $request->user()->projects()->create([
-            'name'=>$request->name,
-            'thumbnail'=>$this->storageFile($request),
-        ]);
-    }
-
-    public function storageFile($request){
-        if ($request->hasFile('thumbnail')) {
-            $thum = $request->thumbnail;
-            $name = $thum->hashName();
-            $thum->storeAs('public/thumbs/original',$name);
-            $path = storage_path('app/public/thumbs/cropped/'.$name);
-            Image::make($thum)->resize(100,100)->save($path);
-            return $name;
-        }else{
-            return null;
-        }
-    }
+        // $this->repo->upFile($request);
+        echo 'ok';
+    }    
 
     /**
      * Display the specified resource.
