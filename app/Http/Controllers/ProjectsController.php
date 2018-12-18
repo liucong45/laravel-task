@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Image;
 use App\Repositories\ProjectsRepository;
+use App\Http\Requests\CreateProjectRequest;
 
 class ProjectsController extends Controller
 {
@@ -42,10 +43,9 @@ class ProjectsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CreateProjectRequest $request)
     {
-        // $this->repo->upFile($request);
-        echo 'ok';
+        $this->repo->upFile($request);
     }    
 
     /**

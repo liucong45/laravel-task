@@ -5,7 +5,7 @@ use Image;
 
 class ProjectsRepository{
     
-    public function upFile(){
+    public function upFile($request){
         $request->user()->projects()->create([
             'name'=>$request->name,
             'thumbnail'=>$this->storageFile($request),
