@@ -23,6 +23,11 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        return view('home',compact('projects'));
+    }
+
+    public function root(){
+        $projects = request()->user()->projects()->get();
+        return view('welcome',compact('projects'));
     }
 }

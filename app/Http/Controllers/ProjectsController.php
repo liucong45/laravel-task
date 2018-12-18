@@ -46,6 +46,7 @@ class ProjectsController extends Controller
     public function store(CreateProjectRequest $request)
     {
         $this->repo->upFile($request);
+        return back();
     }    
 
     /**
