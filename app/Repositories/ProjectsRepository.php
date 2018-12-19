@@ -2,6 +2,7 @@
 namespace App\Repositories;
 
 use Image;
+use App\Project;
 
 class ProjectsRepository{
     
@@ -23,5 +24,9 @@ class ProjectsRepository{
         }else{
             return null;
         }
+    }
+
+    public function delete($id){
+        return Project::findOrFail($id)->delete();        
     }
 }

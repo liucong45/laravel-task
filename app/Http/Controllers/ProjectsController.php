@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+
 use Illuminate\Http\Request;
 use Image;
 use App\Repositories\ProjectsRepository;
 use App\Http\Requests\CreateProjectRequest;
+use App\Project;
 
 class ProjectsController extends Controller
 {
@@ -91,6 +93,7 @@ class ProjectsController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $this->repo->delete($id);
+        return back();
     }
 }
