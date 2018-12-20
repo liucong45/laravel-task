@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Image;
 use App\Repositories\ProjectsRepository;
 use App\Http\Requests\CreateProjectRequest;
+use App\Http\Requests\UpdateProjectRequest;
 use App\Project;
 
 class ProjectsController extends Controller
@@ -80,9 +81,10 @@ class ProjectsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateProjectRequest $request, $id)
     {
-        //
+        $this->repo->update($request,$id);
+        return back();
     }
 
     /**

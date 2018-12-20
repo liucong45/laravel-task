@@ -11,7 +11,7 @@
             <span aria-hidden="true">&times;</span>
         </button>
         </div>
-        {!! Form::model($project,['route'=>'projects.store','files'=>true,'method'=>'POST']) !!}
+        {!! Form::model($project,['route'=>['projects.update',$project->id],'files'=>true,'method'=>'PATCH']) !!}
         <div class="modal-body">
             <div class="form-group">
             {!! Form::label('name','项目名称:') !!}
