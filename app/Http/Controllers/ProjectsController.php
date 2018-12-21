@@ -18,6 +18,7 @@ class ProjectsController extends Controller
     public function __construct(ProjectsRepository $repo)
     {
        $this->repo = $repo; 
+       $this->middleware('auth');
     }
 
     /**
@@ -27,7 +28,9 @@ class ProjectsController extends Controller
      */
     public function index()
     {
-        //
+        $projects = $this->repo->list();
+        
+        return view('welcome',compact('projects'));
     }
 
     /**
@@ -60,7 +63,8 @@ class ProjectsController extends Controller
      */
     public function show($id)
     {
-        //
+        $project = $this->repo->find($id);
+        return view('projects.show',compact('project'));
     }
 
     /**

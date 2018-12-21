@@ -5,6 +5,14 @@ use Image;
 use App\Project;
 
 class ProjectsRepository{
+
+    public function list(){
+        return request()->user()->projects()->get();
+    }
+
+    public function find($id){
+        return Project::findOrFail($id);
+    }
     
     public function upFile($request){
         $request->user()->projects()->create([
@@ -27,7 +35,7 @@ class ProjectsRepository{
     }
 
     public function update($request,$id){
-        $project = Project::findOrFail($id)->find($id);
+        $project = $this->find($id);
         $project->name = $request->name;
         if($request->hasFile('thumbnail')){
             $project->thumbnail = $this->storageFile($request);
@@ -36,6 +44,7 @@ class ProjectsRepository{
     }
 
     public function delete($id){
-        return Project::findOrFail($id)->delete($id);        
+        $project = $this->find($id);
+        return $project->delete();        
     }
 }

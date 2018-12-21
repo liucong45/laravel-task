@@ -1,10 +1,14 @@
 @extends('layouts.app')
 
 @section('content')
+@include('errors._error')
 <div class="container">        
-    <div class="card-deck">@each('projects._card', $projects, 'project')</div>   
-    @include('errors._error')
-    @include('projects._createModal')
+    <div class="card-deck">
+        @each('projects._card', $projects, 'project')
+        @include('projects._createModal') 
+    </div>   
+    
+    
 </div>
 @endsection
 
