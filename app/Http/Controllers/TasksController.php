@@ -2,25 +2,11 @@
 
 namespace App\Http\Controllers;
 
-
 use Illuminate\Http\Request;
-use Image;
-use App\Repositories\ProjectsRepository;
-use App\Http\Requests\CreateProjectRequest;
-use App\Http\Requests\UpdateProjectRequest;
-use App\Project;
+use App\Task;
 
-class ProjectsController extends Controller
+class TasksController extends Controller
 {
-
-    protected $repo;
-
-    public function __construct(ProjectsRepository $repo)
-    {
-       $this->repo = $repo; 
-       $this->middleware('auth');
-    }
-
     /**
      * Display a listing of the resource.
      *
@@ -28,9 +14,7 @@ class ProjectsController extends Controller
      */
     public function index()
     {
-        $projects = $this->repo->list();
-        
-        return view('welcome',compact('projects'));
+        //
     }
 
     /**
@@ -49,11 +33,15 @@ class ProjectsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(CreateProjectRequest $request)
+    public function store(Request $request)
     {
-        $this->repo->upFile($request);
+        Task::Create([
+            'name'=>$request->name,
+            'completion'=>0,
+            'project_id'=>$request->project_id,
+        ]);
         return back();
-    }    
+    }
 
     /**
      * Display the specified resource.
@@ -61,12 +49,9 @@ class ProjectsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Project $project)
+    public function show($id)
     {
-        // $project = $this->repo->find($id);
-        $todo = $this->repo->todo($project);
-        $done = $this->repo->done($project);
-        return view('projects.show',compact('project','todo','done'));
+        //
     }
 
     /**
@@ -87,10 +72,9 @@ class ProjectsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateProjectRequest $request, $id)
+    public function update(Request $request, $id)
     {
-        $this->repo->update($request,$id);
-        return back();
+        //
     }
 
     /**
@@ -101,7 +85,6 @@ class ProjectsController extends Controller
      */
     public function destroy($id)
     {
-        $this->repo->delete($id);
-        return back();
+        //
     }
 }

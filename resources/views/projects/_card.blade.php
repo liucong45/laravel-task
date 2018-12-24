@@ -9,7 +9,7 @@
             </li>
             
         </ul>
-    <a href="projects/{{$project->id}}">
+    <a href="{{route('projects.show',$project->id)}}">
         <img class="card-img-top" src="{{asset('storage/thumbs/original/'.$project->thumbnail)}}" alt="Card image cap">
         <div class="card-body">
             <h6 class="card-title">{{$project->name}}</h6>

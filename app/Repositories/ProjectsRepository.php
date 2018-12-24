@@ -47,4 +47,11 @@ class ProjectsRepository{
         $project = $this->find($id);
         return $project->delete();        
     }
+
+    public function todo($project){
+        return $project->tasks()->where('completion',0)->get();
+    }
+    public function done($project){
+        return $project->tasks()->where('completion',1)->get();
+    }
 }

@@ -9,6 +9,10 @@ class Project extends Model
     protected $fillable = ['name','thumbnail'];
     
     public function user(){
-        return $this->belongsTo('App/User');
+        return $this->belongsTo('App\User');
+    }
+
+    public function tasks(){
+        return $this->hasMany('App\Task');
     }
 }
