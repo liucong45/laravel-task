@@ -63,10 +63,12 @@ class ProjectsController extends Controller
      */
     public function show(Project $project)
     {
-        // $project = $this->repo->find($id);
         $todo = $this->repo->todo($project);
         $done = $this->repo->done($project);
-        return view('projects.show',compact('project','todo','done'));
+        $projects = $this->repo->projecstSelectList();
+        // dd($projects);
+        // exit();
+        return view('projects.show',compact('project','todo','done','projects'));
     }
 
     /**

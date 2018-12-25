@@ -4,3 +4,5 @@
     {!! Form::text('name',null,['class'=>'form-control','placeholder'=>'您还有未完成的任务吗？']) !!}
 </div>
 {!! Form::close() !!}
+{!! $errors->create->first('name','<div class="alert alert-danger">:message</div>') !!}
+{!! $errors->create->first('project','<div class="alert alert-danger">:message</div>') !!}

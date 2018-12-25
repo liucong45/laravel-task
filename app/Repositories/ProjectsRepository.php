@@ -54,4 +54,7 @@ class ProjectsRepository{
     public function done($project){
         return $project->tasks()->where('completion',1)->get();
     }
+    public function projecstSelectList(){
+        return request()->user()->projects()->pluck('name','id');
+    }
 }

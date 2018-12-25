@@ -10,11 +10,41 @@
 <div class="tab-content" id="myTabContent">
     <div class="tab-pane fade show active" id="todo" role="tabpanel" aria-labelledby="todo-tab">
         <table class="table table-striped">
-            @each('tasks._listTable',$todo,'task')
+            {{-- @each('tasks._listTable',$todo,'task') --}}
+            @foreach ($todo as $task)
+            <tr>
+                <td>
+                    {{$task->name}}
+                </td>
+                <td>
+                    @include('tasks._checkForm')
+                </td>
+                <td>
+                    @include('tasks._editModal')
+                </td>
+                <td>
+                    @include('tasks._destroyForm')
+                </td>
+            </tr>    
+            @endforeach
+            
         </table>        
     </div>
     <div class="tab-pane fade" id="done" role="tabpanel" aria-labelledby="done-tab"><table class="table table-striped">
-            @each('tasks._listTable',$done,'task')
+            {{-- @each('tasks._listTable',$done,'task') --}}
+            @foreach ($done as $task)
+            <tr>
+                <td>{{$task->name}}</td>
+                <td>@include('tasks._checkForm')</td>
+                <td>
+                    <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#taskEdit-{{ $task->id }}">
+                        <i class="fa fa-cog"></i>
+                    </button>
+                    @include('tasks._editModal')
+                </td>
+            </tr>
+            @endforeach
+            
         </table>   
     </div>
 </div>

@@ -4,9 +4,17 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Task;
+use App\Repositories\TasksRepository;
+use App\Http\Requests\CreateTaskRequest;
 
 class TasksController extends Controller
 {
+
+    protected $repo;
+
+    public function __construct(TasksRepository $repo){
+        $this->repo=$repo;
+    }
     /**
      * Display a listing of the resource.
      *
@@ -33,13 +41,9 @@ class TasksController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CreateTaskRequest $request)
     {
-        Task::Create([
-            'name'=>$request->name,
-            'completion'=>0,
-            'project_id'=>$request->project_id,
-        ]);
+        $this->repo->create($request);
         return back();
     }
 
@@ -52,6 +56,11 @@ class TasksController extends Controller
     public function show($id)
     {
         //
+    }
+
+    public function check($id){
+        $this->repo->check($id);
+        return back();
     }
 
     /**
@@ -74,7 +83,8 @@ class TasksController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->repo->update($request,$id);
+        return back();
     }
 
     /**
@@ -85,6 +95,7 @@ class TasksController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $this->repo->destroy($id);
+        return back();
     }
 }
