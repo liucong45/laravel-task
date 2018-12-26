@@ -35,4 +35,11 @@ class TasksRepository{
         $task = $this->find($id);
         return $task->delete();
     }
+
+    public function todo(){
+        return request()->user()->tasks()->where('completion',0)->paginate(15);
+    }
+    public function done(){
+        return request()->user()->tasks()->where('completion',1)->paginate(15);
+    }
 }

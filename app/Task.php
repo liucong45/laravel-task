@@ -12,4 +12,8 @@ class Task extends Model
     public function project(){
         return $this->belongsTo('App\Project');
     }
+
+    public function getProjectAttribute(){
+        return $this->project_id;
+    }
 }

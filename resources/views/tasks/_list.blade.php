@@ -10,10 +10,12 @@
 <div class="tab-content" id="myTabContent">
     <div class="tab-pane fade show active" id="todo" role="tabpanel" aria-labelledby="todo-tab">
         <table class="table table-striped">
+            <tr><td colspan="4">@include('tasks._createForm')</td></tr>
             {{-- @each('tasks._listTable',$todo,'task') --}}
+            @if (count($todo))
             @foreach ($todo as $task)
             <tr>
-                <td>
+                <td class="col-9 pl-5">
                     {{$task->name}}
                 </td>
                 <td>
@@ -26,12 +28,13 @@
                     @include('tasks._destroyForm')
                 </td>
             </tr>    
-            @endforeach
-            
+            @endforeach 
+            @endif
         </table>        
     </div>
     <div class="tab-pane fade" id="done" role="tabpanel" aria-labelledby="done-tab"><table class="table table-striped">
             {{-- @each('tasks._listTable',$done,'task') --}}
+            @if (count($done))
             @foreach ($done as $task)
             <tr>
                 <td>{{$task->name}}</td>
@@ -43,8 +46,8 @@
                     @include('tasks._editModal')
                 </td>
             </tr>
-            @endforeach
-            
+            @endforeach 
+            @endif            
         </table>   
     </div>
 </div>

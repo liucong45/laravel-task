@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Task;
 use App\Repositories\TasksRepository;
 use App\Http\Requests\CreateTaskRequest;
+use App\Http\Requests\UpdateTaskRequest;
 
 class TasksController extends Controller
 {
@@ -13,7 +14,9 @@ class TasksController extends Controller
     protected $repo;
 
     public function __construct(TasksRepository $repo){
+        $this->middleware('auth');
         $this->repo=$repo;
+        
     }
     /**
      * Display a listing of the resource.
@@ -22,7 +25,10 @@ class TasksController extends Controller
      */
     public function index()
     {
-        //
+        $todo = $this->repo->todo();
+        $done = $this->repo->done();
+        $projects = request()->user()->projects()->pluck('name','id');
+        return view('tasks.index',compact('tasks','todo','done','projects'));
     }
 
     /**
@@ -81,7 +87,7 @@ class TasksController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateTaskRequest $request, $id)
     {
         $this->repo->update($request,$id);
         return back();
