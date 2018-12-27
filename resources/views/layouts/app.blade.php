@@ -79,6 +79,11 @@
             @yield('content')
         </main>
     </div>
+<footer class="footer mt-auto py-3">
+  <div class="container">
+    <span class="text-muted">未完成任务{{$todoCount}}个，已完成任务{{$doneCount}}个，总共任务{{$total}}个。</span>
+  </div>
+</footer>
 </body>
  <!-- Scripts -->
  <script src="{{ asset('js/app.js') }}"></script>

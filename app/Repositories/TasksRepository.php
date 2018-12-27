@@ -42,4 +42,15 @@ class TasksRepository{
     public function done(){
         return request()->user()->tasks()->where('completion',1)->paginate(15);
     }
+
+    public function todoCount(){
+        return request()->user()->tasks()->where('completion',0)->count();
+    }
+    public function doneCount(){
+        return request()->user()->tasks()->where('completion',1)->count();
+    }
+    public function total(){
+        return request()->user()->tasks()->count();
+    }
+    
 }
