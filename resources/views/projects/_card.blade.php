@@ -1,4 +1,4 @@
-<div class="col-3 my-3" >
+<div class="col-4 my-3" >
     <div class="card project-card">
         <ul class="icon-bar">
             <li>@include('projects._destroy')</li>
@@ -10,7 +10,7 @@
             
         </ul>
     <a href="{{route('projects.show',$project->id)}}">
-        <img class="card-img-top" src="{{asset('storage/thumbs/original/'.$project->thumbnail)}}" alt="Card image cap">
+        <img class="card-img-top" src="{{asset('storage/thumbs/cropped/'.$project->thumbnail)}}" alt="Card image cap">
         <div class="card-body">
             <h6 class="card-title">{{$project->name}}</h6>
         </div>

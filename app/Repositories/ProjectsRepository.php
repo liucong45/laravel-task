@@ -27,7 +27,7 @@ class ProjectsRepository{
             $name = $thum->hashName();
             $thum->storeAs('public/thumbs/original',$name);
             $path = storage_path('app/public/thumbs/cropped/'.$name);
-            Image::make($thum)->resize(100,100)->save($path);
+            Image::make($thum)->resize(320,320)->save($path);
             return $name;
         }else{
             return null;

@@ -24,8 +24,9 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')
-        //          ->hourly();
+        //自动备份数据库
+        $schedule->command('back:run --disable-notifications --only-db')
+                 ->dailyAt('01:00');
     }
 
     /**
