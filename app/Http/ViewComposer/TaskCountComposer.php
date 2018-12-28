@@ -9,12 +9,12 @@ class TaskCountComposer{
     }
 
     public function compose(View $view){
-        return $view->with([
-            'total'=>$this->task->total(),
-            'todoCount'=>$this->task->todoCount(),
-            'doneCount'=>$this->task->doneCount(),
-        ]);
+        if (auth()->user()) {
+            return $view->with([
+                'total'=>$this->task->total(),
+                'todoCount'=>$this->task->todoCount(),
+                'doneCount'=>$this->task->doneCount(),
+            ]);
+        }
     }
 }
-
-// E:\wamp\www\task\app\Repositories\TasksRepository.php

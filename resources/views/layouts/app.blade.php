@@ -81,7 +81,9 @@
     </div>
 <footer class="footer mt-auto py-3">
   <div class="container">
-    <span class="text-muted">未完成任务{{$todoCount}}个，已完成任务{{$doneCount}}个，总共任务{{$total}}个。</span>
+      @auth
+      <span class="text-muted">未完成任务{{$todoCount}}个，已完成任务{{$doneCount}}个，总共任务{{$total}}个。</span>
+      @endauth    
   </div>
 </footer>
 </body>

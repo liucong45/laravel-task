@@ -13,7 +13,10 @@ class ViewServiceProvider extends ServiceProvider
      * @return void
      */
     public function boot(){
+        
         view()->composer('layouts.app','App\Http\ViewComposer\TaskCountComposer@compose');
+        
+        
         // view()->composer('layouts.app',function($view){
         //     $view->with([
         //         'total'=>10,
