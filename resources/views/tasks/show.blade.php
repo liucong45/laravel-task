@@ -4,9 +4,16 @@
 <div class="container" id='app'>
     <h3>{{$task->name}}</h3>
     <ul class="list-group">
-        <li class="list-group-item" v-for='step in steps'>@{{step.name}}</li>        
+        <li class="list-group-item" v-for='step in steps'>
+        @{{step.name}}
+        <i class="fa fa-check pull-right" @click='completa(step)'></i>
+        </li>        
     </ul>
-    <input type="text" v-model='newStep' @keyup.enter="addStep">
+    <form class='form-inline' @submit.prevent='addStep'>
+    <input type="text" v-model='newStep' @keyup.enter="addStep" class=“form-control”>
+    <button type="button" class="btn btn-primary">添加步骤</button>
+    </form>
+    
 </div>
     
 @endsection
@@ -28,6 +35,11 @@
             addStep(){
                 this.steps.push({name:this.newStep,completion:false})
                 this.newStep=''
+            },
+            completa(step){
+                step.completion = true
+                alert(step.name)
+                alert(step.completion)
             }
         }
     })
