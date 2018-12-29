@@ -16,4 +16,7 @@ class Task extends Model
     public function getProjectAttribute(){
         return $this->project_id;
     }
+    public function steps(){
+        return $this->hasMany('App\Step');
+    }
 }
