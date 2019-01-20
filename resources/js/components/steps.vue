@@ -9,23 +9,14 @@
             <div class="card-body">
                 <ul class="list-group">
                     <li class="list-group-item" v-for='(step,index) in inProcess'>
-                    <span @dblClick='edit(step)' >{{step.name}}</span> 
+                    <span @dblclick='edit(step)' >{{step.name}}</span> 
                     <i class="fa fa-check pull-right" @click='completaToggle(step)'></i>
                     <i class="fa fa-close pull-right" @click='remove(step)'></i>
                     </li>        
                 </ul>
             </div>
         </div>
-        <div class="card">
-            <div class="card-header">
-                <div class="from-group">
-                    <label>当前任务增加步骤：</label>
-                    <input type="text" v-model='newStep' ref='newStep' @keyup.enter="addStep" class=“form-control”>
-                    <button v-if='newStep' type="button" class="btn btn-sm pull-right" @click='addStep'>提交</button>
-                </div>
-            </div>
-            
-        </div>
+        <step-input :route='route' @add='sync'></step-input>
     </div>
     <div class="col-4 mb-4" v-if='process.length'>
         <div class="card">
@@ -34,7 +25,7 @@
             <div class="card-body">
                 <ul class="list-group">
                     <li class="list-group-item" v-for='(step,index) in process'>
-                    @{{step.name}}
+                    {{step.name}}
                     <i class="fa fa-exclamation-triangle pull-right" @click='completaToggle(step)'></i>
                     <i class="fa fa-close pull-right" @click='remove(step)'></i>
                     </li>
@@ -46,17 +37,23 @@
 </template>
 
 <script>
+import StepInfo from './step-input'
     export default {
+        props:[
+            'route'
+        ],
+        components:{
+            'step-input':StepInfo
+        },
         data(){
             return {
                 steps:[
-                    {name:'hollo word!',completion:false},
-                    {name:'frist data!',completion:false},
-                    {name:'end show!',completion:false},                
-                    {name:'true task!',completion:true}
-                ],
-                newStep:''
+                    // {name:'hollo word!',completion:false},
+                ],                
             }
+        },
+        created(){
+            this.fetchSteps()
         },
         computed:{
             inProcess(){
@@ -72,16 +69,27 @@
 
         },
         methods:{
-            addStep(){
-                this.steps.push({name:this.newStep,completion:false})
-                this.newStep=''
+            fetchSteps(){
+               axios.get(this.route).then((res)=>{
+                    this.steps = res.data
+                }) 
             },
+            sync(step){
+                this.steps.push(step)
+            },
+            
             completaToggle(step){
-                step.completion = !step.completion
+                axios.put(`${this.route}/${step.id}`,{completion:!step.completion}).then((res)=>{
+                    step.completion = !step.completion
+                })                
             },
             remove(step){
-                let i = this.steps.indexOf(step)
-                this.steps.splice(i,1)
+                axios.delete(`${this.route}/${step.id}`).then((res)=>{
+                    if(res.status){
+                        let i = this.steps.indexOf(step)
+                        this.steps.splice(i,1)
+                    }            
+                })                
             },
             edit(step){
                 this.remove(step)
@@ -89,14 +97,14 @@
                 this.$refs.newStep.focus()
             },
             completaAll(){
-                this.inProcess.forEach(function(step){
-                    step.completion = true
-                })
+                axios.post(`${this.route}/complete`,{completion:true}).then((res)=>{
+                    this.fetchSteps()
+                })                
             },
             unCompletaAll(){
-                this.process.forEach(function(step){
-                    step.completion = false
-                })
+                axios.post(`${this.route}/complete`,{completion:false}).then((res)=>{
+                    this.fetchSteps()
+                })       
             },            
         }
     }

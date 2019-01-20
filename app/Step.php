@@ -10,6 +10,10 @@ class Step extends Model
         'name','completion','task_id'
     ];
 
+    protected $attributes = [
+        'completion' => false,
+    ];
+
     public function task(){
         return $this->belongsTo('App\Task');
     }

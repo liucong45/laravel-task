@@ -22,4 +22,5 @@ Route::get('/', 'ProjectsController@index');
 Route::resource('projects', 'ProjectsController');
 Route::resource('tasks', 'TasksController');
 Route::post('tasks/{id}/check','TasksController@check')->name('tasks.check');
+Route::post('tasks/{task}/steps/complete','StepController@completeAll')->name('steps.complete');
 Route::resource('tasks.steps', 'StepController');

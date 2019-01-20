@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Step;
+use App\Task;
 use Illuminate\Http\Request;
 
 class StepController extends Controller
@@ -12,9 +13,9 @@ class StepController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Task $task)
     {
-        //
+        return $task->steps;
     }
 
     /**
@@ -33,9 +34,11 @@ class StepController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Task $task,Request $request)
     {
-        //
+        return response()->json([
+            'step'=>$task->steps()->create($request->only('name'))
+        ]);
     }
 
     /**
@@ -67,9 +70,10 @@ class StepController extends Controller
      * @param  \App\Step  $step
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Step $step)
+    public function update(Task $task, Step $step, Request $request)
     {
-        //
+        $step->completion = $request->completion;
+        $step->update();
     }
 
     /**
@@ -78,8 +82,18 @@ class StepController extends Controller
      * @param  \App\Step  $step
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Step $step)
+    public function destroy(Task $task,Step $step)
     {
-        //
+        $status = $step->delete();
+        return response()->json([
+            'status'=> $status,
+        ]);
+    }
+
+    public function completeAll(Task $task,Request $request)
+    {
+        $task->steps()->update([
+            'completion'=>$request->completion,
+        ]);
     }
 }
