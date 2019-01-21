@@ -25,8 +25,6 @@ class AddTasksForeign extends Migration
      */
     public function down()
     {
-        Schema::table('tasks', function (Blueprint $table) {
-            $table->dropForeign('project_id');
-        });
+        Schema::disableForeignKeyConstraints();
     }
 }

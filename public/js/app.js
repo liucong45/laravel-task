@@ -47506,7 +47506,7 @@ var content = __webpack_require__(42);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(44)("16d4d850", content, false, {});
+var update = __webpack_require__(44)("6fad09dd", content, false, {});
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -47886,6 +47886,7 @@ module.exports = function listToStyles (parentId, list) {
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__step_input__ = __webpack_require__(47);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__step_input___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__step_input__);
+throw new Error("Cannot find module \"../event-hus\"");
 //
 //
 //
@@ -47924,6 +47925,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -47982,8 +47984,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         },
         edit: function edit(step) {
             this.remove(step);
-            this.newStep = step.name;
-            this.$refs.newStep.focus();
+            // Hub.$emit('edit',step)                
         },
         completaAll: function completaAll() {
             var _this3 = this;
@@ -48055,6 +48056,7 @@ module.exports = Component.exports
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+throw new Error("Cannot find module \"../event-hus\"");
 //
 //
 //
@@ -48069,12 +48071,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 
+
 /* harmony default export */ __webpack_exports__["default"] = ({
     props: ['route'],
     data: function data() {
         return {
             'newStep': ''
         };
+    },
+    created: function created() {
+        // Hub.$on('edit',this.editStep)
     },
 
     methods: {
@@ -48085,6 +48091,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 _this.$emit('add', res.data.step);
                 _this.newStep = '';
             });
+        },
+        editStep: function editStep(step) {
+            this.newStep = step.name;
+            this.$refs.newStep.focus();
         }
     }
 });

@@ -12,6 +12,7 @@
 </template>
 
 <script>
+import { Hub } from '../event-hus'
 export default {
     props:[
         'route'
@@ -21,6 +22,9 @@ export default {
             'newStep':''
         }
     },
+    created(){
+        // Hub.$on('edit',this.editStep)
+    },
     methods:{
         addStep(){
             axios.post(this.route,{name:this.newStep}).then((res)=>{
@@ -28,6 +32,10 @@ export default {
                 this.newStep=''
             })           
         },
+        editStep(step){
+            this.newStep = step.name
+            this.$refs.newStep.focus()
+        }
     }
 }
 </script>

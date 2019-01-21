@@ -38,6 +38,7 @@
 
 <script>
 import StepInfo from './step-input'
+import { Hub } from '../event-hus'
     export default {
         props:[
             'route'
@@ -93,8 +94,7 @@ import StepInfo from './step-input'
             },
             edit(step){
                 this.remove(step)
-                this.newStep = step.name
-                this.$refs.newStep.focus()
+                // Hub.$emit('edit',step)                
             },
             completaAll(){
                 axios.post(`${this.route}/complete`,{completion:true}).then((res)=>{
