@@ -24,3 +24,6 @@ Route::resource('tasks', 'TasksController');
 Route::post('tasks/{id}/check','TasksController@check')->name('tasks.check');
 Route::post('tasks/{task}/steps/complete','StepController@completeAll')->name('steps.complete');
 Route::resource('tasks.steps', 'StepController');
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');

@@ -9,16 +9,16 @@
 
     <title>{{ config('app.name', 'Laravel') }}</title>
 
-   
+    <!-- Scripts -->
+    <script src="{{ asset('js/app.js') }}" defer></script>
 
     <!-- Fonts -->
-    <!--<link rel="dns-prefetch" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet" type="text/css"> -->
+    {{-- <link rel="dns-prefetch" href="//fonts.gstatic.com"> --}}
+    {{-- <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet" type="text/css"> --}}
+    <link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    <!-- <link href="{{ asset('css/font-awesome.min.css') }}" rel="stylesheet"> -->
-    <link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 </head>
 <body>
     <div id="app">
@@ -34,9 +34,7 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mr-auto">
-                            <li class="nav-item">
-                                <a href="{{ route('tasks.index') }}">所有任务</a>
-                            </li>
+
                     </ul>
 
                     <!-- Right Side Of Navbar -->
@@ -46,11 +44,11 @@
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
                             </li>
-                            <li class="nav-item">
-                                @if (Route::has('register'))
+                            @if (Route::has('register'))
+                                <li class="nav-item">
                                     <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
-                                @endif
-                            </li>
+                                </li>
+                            @endif
                         @else
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
@@ -79,15 +77,5 @@
             @yield('content')
         </main>
     </div>
-<footer class="footer mt-auto py-3">
-  <div class="container">
-      @auth
-      <span class="text-muted">未完成任务{{$todoCount}}个，已完成任务{{$doneCount}}个，总共任务{{$total}}个。</span>
-      @endauth    
-  </div>
-</footer>
 </body>
- <!-- Scripts -->
- <script src="{{ asset('js/app.js') }}"></script>
-    @yield('javascript')
 </html>

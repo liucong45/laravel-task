@@ -38,7 +38,7 @@
 
 <script>
 import StepInfo from './step-input'
-import { Hub } from '../event-hus'
+import { Hub } from '../event-bus'
     export default {
         props:[
             'route'
