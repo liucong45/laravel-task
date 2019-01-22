@@ -23,7 +23,7 @@ export default {
         }
     },
     created(){
-        // Hub.$on('edit',this.editStep)
+        Hub.$on('edit',this.editStep)
     },
     methods:{
         addStep(){
