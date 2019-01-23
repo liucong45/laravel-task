@@ -47541,7 +47541,7 @@ exports = module.exports = __webpack_require__(44)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -47924,20 +47924,21 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-    props: ['route'],
+    props: {
+        route: String,
+        initSteps: Array
+    },
     components: {
         'step-input': __WEBPACK_IMPORTED_MODULE_0__step_input___default.a,
         'step-list': __WEBPACK_IMPORTED_MODULE_2__step_list___default.a
     },
     data: function data() {
         return {
-            steps: [
-                // {name:'hollo word!',completion:false},
-            ]
+            steps: this.initSteps
         };
     },
     created: function created() {
-        this.fetchSteps();
+        // this.fetchSteps()
         __WEBPACK_IMPORTED_MODULE_1__event_bus__["a" /* Hub */].$on('remove', this.remove);
         __WEBPACK_IMPORTED_MODULE_1__event_bus__["a" /* Hub */].$on('fetchSteps', this.fetchSteps);
     },
@@ -47961,9 +47962,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             axios.get(this.route).then(function (res) {
                 _this.steps = res.data;
             });
-        },
-        sync: function sync(step) {
-            this.steps.push(step);
         },
         remove: function remove(step) {
             var i = this.steps.indexOf(step);
@@ -48064,11 +48062,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
     methods: {
         addStep: function addStep() {
-            var _this = this;
-
             axios.post(this.route, { name: this.newStep }).then(function (res) {
-                _this.$emit('add', res.data.step);
-                _this.newStep = '';
+                window.location.reload();
             });
         },
         editStep: function editStep(step) {
@@ -48349,7 +48344,7 @@ var render = function() {
           ])
         ]),
         _vm._v(" "),
-        _c("step-input", { attrs: { route: _vm.route }, on: { add: _vm.sync } })
+        _c("step-input", { attrs: { route: _vm.route } })
       ],
       1
     ),

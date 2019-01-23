@@ -28,8 +28,7 @@ export default {
     methods:{
         addStep(){
             axios.post(this.route,{name:this.newStep}).then((res)=>{
-                this.$emit('add',res.data.step)
-                this.newStep=''
+                window.location.reload()
             })           
         },
         editStep(step){

@@ -6,7 +6,7 @@
                 <button class="btn btn-sm pull-right" type="button" @click='completaAll()'>全部完成</button>
             </div>
         </step-list>
-        <step-input :route='route' @add='sync'></step-input>
+        <step-input :route='route'></step-input>
     </div>
     <div class="col-4 mb-4" v-if='process.length'>
         <step-list :route='route' :steps='process'>
@@ -22,22 +22,21 @@ import StepInfo from './step-input'
 import { Hub } from '../event-bus'
 import StepList from './step-list'
     export default {
-        props:[
-            'route'
-        ],
+        props:{
+            route:String,
+            initSteps:Array,
+        },
         components:{
             'step-input':StepInfo,
             'step-list':StepList,
         },
         data(){
             return {
-                steps:[
-                    // {name:'hollo word!',completion:false},
-                ],                
+                steps:this.initSteps,                
             }
         },
         created(){
-            this.fetchSteps()
+            // this.fetchSteps()
             Hub.$on('remove',this.remove)
             Hub.$on('fetchSteps',this.fetchSteps)
         },
@@ -59,9 +58,6 @@ import StepList from './step-list'
                axios.get(this.route).then((res)=>{
                     this.steps = res.data
                 }) 
-            },
-            sync(step){
-                this.steps.push(step)
             },
             remove(step){
                 let i = this.steps.indexOf(step)
