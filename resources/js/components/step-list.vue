@@ -4,8 +4,9 @@
         
         <div class="card-body">
             <ul class="list-group">
-                <li class="list-group-item" v-for='(step,index) in steps'>
-                <span @dblclick='edit(step)' >{{step.name}}</span> 
+                <li class="list-group-item" v-for='(step,i) in steps'>
+                <span @dblclick='edit(step,i)' ref="stepName" >{{step.name}} </span>
+                <input type="text" v-model="editedStep" ref="stepInput" @keyup.enter="update(step)" style="display:none">
                 <i class="fa fa-check pull-right" @click='completaToggle(step)'></i>
                 <i class="fa fa-close pull-right" @click='remove(step)'></i>
                 </li>        
@@ -21,10 +22,15 @@ export default {
         steps:Array,
         route:String,
     },
+    data(){
+        return {
+            editedStep:'',
+        }
+    },
     methods:{
         completaToggle(step){
-            axios.put(`${this.route}/${step.id}`,{completion:!step.completion}).then((res)=>{
-                step.completion = !step.completion
+            axios.put(`${this.route}/${step.id}/toggle`,{completion:!step.completion}).then((res)=>{
+                window.location.reload()
             })                
         },
         remove(step){
@@ -34,10 +40,16 @@ export default {
                 }            
             })                
         },
-        edit(step){
-            this.remove(step)
-            Hub.$emit('edit',step)         
-        },        
+        edit(step,i){
+            this.$refs.stepName[i].style.display='none'
+            this.$refs.stepInput[i].style.display='block'
+            this.editedStep = step.name
+        },
+        update(step){
+            axios.put(`${this.route}/${step.id}`,{name:this.editedStep}).then((res)=>{
+                window.location.reload()
+            })  
+        }      
     }
 }
 </script>

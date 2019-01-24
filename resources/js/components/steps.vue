@@ -1,16 +1,16 @@
 <template>
 <div class="row">
     <div class="col-4 mb-4">
-        <step-list :route='route' :steps='inProcess'>
-            <div class="card-header">待完成的步骤：({{ inProcess.length }})
+        <step-list :route='route' :steps='inProcess' >
+            <div class="card-header">待完成的步骤：({{inProcess.length}})
                 <button class="btn btn-sm pull-right" type="button" @click='completaAll()'>全部完成</button>
             </div>
         </step-list>
-        <step-input :route='route'></step-input>
+        <step-input :route='route' ></step-input>
     </div>
     <div class="col-4 mb-4" v-if='process.length'>
-        <step-list :route='route' :steps='process'>
-            <div class="card-header">已完成的步骤：({{ process.length }})    
+        <step-list :route='route' :steps='process' >
+            <div class="card-header">已完成的步骤：({{process.length}})    
             <button class="btn btn-sm pull-right" @click='unCompletaAll()'>全部清除</button></div>
         </step-list>
     </div>
@@ -25,6 +25,8 @@ import StepList from './step-list'
         props:{
             route:String,
             initSteps:Array,
+            inProcess:Array,
+            process:Array,
         },
         components:{
             'step-input':StepInfo,
@@ -39,19 +41,6 @@ import StepList from './step-list'
             // this.fetchSteps()
             Hub.$on('remove',this.remove)
             Hub.$on('fetchSteps',this.fetchSteps)
-        },
-        computed:{
-            inProcess(){
-                return this.steps.filter((step)=>{
-                    return !step.completion
-                })
-            },
-            process(){
-                return this.steps.filter(function(step){
-                    return step.completion
-                })
-            }
-
         },
         methods:{
             fetchSteps(){

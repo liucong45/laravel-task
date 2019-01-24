@@ -15,7 +15,10 @@ class StepController extends Controller
      */
     public function index(Task $task)
     {
-        return $task->steps;
+        $steps = $task->steps;
+        $inProcess = $task->steps->where('completion',0)->values();
+        $process = $task->steps->where('completion',1)->values();
+        return view('step.show',compact('task','steps','inProcess','process'));
     }
 
     /**
@@ -72,10 +75,15 @@ class StepController extends Controller
      */
     public function update(Task $task, Step $step, Request $request)
     {
+        $step->name = $request->name;
+        $step->update();
+    }
+    
+    public function toggle(Task $task, Step $step, Request $request)
+    {
         $step->completion = $request->completion;
         $step->update();
     }
-
     /**
      * Remove the specified resource from storage.
      *

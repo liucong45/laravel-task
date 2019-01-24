@@ -47541,7 +47541,7 @@ exports = module.exports = __webpack_require__(44)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -47926,7 +47926,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony default export */ __webpack_exports__["default"] = ({
     props: {
         route: String,
-        initSteps: Array
+        initSteps: Array,
+        inProcess: Array,
+        process: Array
     },
     components: {
         'step-input': __WEBPACK_IMPORTED_MODULE_0__step_input___default.a,
@@ -47943,18 +47945,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         __WEBPACK_IMPORTED_MODULE_1__event_bus__["a" /* Hub */].$on('fetchSteps', this.fetchSteps);
     },
 
-    computed: {
-        inProcess: function inProcess() {
-            return this.steps.filter(function (step) {
-                return !step.completion;
-            });
-        },
-        process: function process() {
-            return this.steps.filter(function (step) {
-                return step.completion;
-            });
-        }
-    },
     methods: {
         fetchSteps: function fetchSteps() {
             var _this = this;
@@ -48213,6 +48203,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -48220,10 +48211,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         steps: Array,
         route: String
     },
+    data: function data() {
+        return {
+            editedStep: ''
+        };
+    },
+
     methods: {
         completaToggle: function completaToggle(step) {
-            axios.put(this.route + '/' + step.id, { completion: !step.completion }).then(function (res) {
-                step.completion = !step.completion;
+            axios.put(this.route + '/' + step.id + '/toggle', { completion: !step.completion }).then(function (res) {
+                window.location.reload();
             });
         },
         remove: function remove(step) {
@@ -48233,9 +48230,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 }
             });
         },
-        edit: function edit(step) {
-            this.remove(step);
-            __WEBPACK_IMPORTED_MODULE_0__event_bus__["a" /* Hub */].$emit('edit', step);
+        edit: function edit(step, i) {
+            this.$refs.stepName[i].style.display = 'none';
+            this.$refs.stepInput[i].style.display = 'block';
+            this.editedStep = step.name;
+        },
+        update: function update(step) {
+            axios.put(this.route + '/' + step.id, { name: this.editedStep }).then(function (res) {
+                window.location.reload();
+            });
         }
     }
 });
@@ -48258,19 +48261,54 @@ var render = function() {
         _c(
           "ul",
           { staticClass: "list-group" },
-          _vm._l(_vm.steps, function(step, index) {
+          _vm._l(_vm.steps, function(step, i) {
             return _c("li", { staticClass: "list-group-item" }, [
               _c(
                 "span",
                 {
+                  ref: "stepName",
+                  refInFor: true,
                   on: {
                     dblclick: function($event) {
-                      _vm.edit(step)
+                      _vm.edit(step, i)
                     }
                   }
                 },
-                [_vm._v(_vm._s(step.name))]
+                [_vm._v(_vm._s(step.name) + " ")]
               ),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.editedStep,
+                    expression: "editedStep"
+                  }
+                ],
+                ref: "stepInput",
+                refInFor: true,
+                staticStyle: { display: "none" },
+                attrs: { type: "text" },
+                domProps: { value: _vm.editedStep },
+                on: {
+                  keyup: function($event) {
+                    if (
+                      !("button" in $event) &&
+                      _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
+                    ) {
+                      return null
+                    }
+                    _vm.update(step)
+                  },
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.editedStep = $event.target.value
+                  }
+                }
+              }),
               _vm._v(" "),
               _c("i", {
                 staticClass: "fa fa-check pull-right",
