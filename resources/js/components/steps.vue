@@ -44,9 +44,7 @@ import StepList from './step-list'
         },
         methods:{
             fetchSteps(){
-               axios.get(this.route).then((res)=>{
-                    this.steps = res.data
-                }) 
+                
             },
             remove(step){
                 let i = this.steps.indexOf(step)
@@ -54,12 +52,12 @@ import StepList from './step-list'
             },            
             completaAll(){
                 axios.post(`${this.route}/complete`,{completion:true}).then((res)=>{
-                    Hub.$emit('fetchSteps')
+                    window.location.reload()
                 })                
             },
             unCompletaAll(){
                 axios.post(`${this.route}/complete`,{completion:false}).then((res)=>{
-                    Hub.$emit('fetchSteps')
+                    window.location.reload()
                 })       
             },
         }

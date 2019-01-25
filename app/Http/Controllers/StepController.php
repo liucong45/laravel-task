@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Step;
 use App\Task;
 use Illuminate\Http\Request;
+use App\Http\Requests\StepRequest;
 
 class StepController extends Controller
 {
@@ -37,11 +38,13 @@ class StepController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Task $task,Request $request)
+    public function store(Task $task,StepRequest $request)
     {
-        return response()->json([
-            'step'=>$task->steps()->create($request->only('name'))
-        ]);
+        // return response()->json([
+        //     'step'=>$task->steps()->create($request->only('name'))
+        // ]);
+        $task->steps()->create($request->only('name'));
+        return back();
     }
 
     /**
