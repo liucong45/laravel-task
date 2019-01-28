@@ -52,5 +52,9 @@ class TasksRepository{
     public function total(){
         return request()->user()->tasks()->count();
     }
+
+    public function all(){
+        return request()->user()->tasks;
+    }
     
 }

@@ -104,4 +104,10 @@ class TasksController extends Controller
         $this->repo->destroy($id);
         return back();
     }
+
+    public function search(Request $request){
+        return response()->json([
+            'tasks'=> $this->repo->all(),
+        ]);
+    }
 }

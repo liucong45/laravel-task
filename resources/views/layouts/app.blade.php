@@ -34,7 +34,9 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mr-auto">
-
+                        <li class="navbar-nav mr-auto"><a class="nav-link" href="{{route('tasks.index')}}">所有任务</a></li>
+                        <search route-all="{{route('tasks.search')}}"></search>
+                        
                     </ul>
 
                     <!-- Right Side Of Navbar -->

@@ -20,6 +20,7 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/', 'ProjectsController@index');
 Route::resource('projects', 'ProjectsController');
+Route::get('tasks/search', 'TasksController@search')->name('tasks.search');
 Route::resource('tasks', 'TasksController');
 Route::post('tasks/{id}/check','TasksController@check')->name('tasks.check');
 Route::post('tasks/{task}/steps/complete','StepController@completeAll')->name('steps.complete');
