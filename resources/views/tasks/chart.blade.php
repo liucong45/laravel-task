@@ -40,7 +40,7 @@
                 "labels":{!! $name !!},
                 "datasets":[{
                     "label":"My First Dataset",
-                    "data":[65,59],
+                    "data":{!! json_encode(objCountArray($projects)) !!},
                     "fill":false,
                     "backgroundColor":[
                         "rgba(255, 99, 132, 0.2)",
@@ -57,7 +57,19 @@
             var myBarChart = new Chart(barCharDocument, {
                 type: 'bar',
                 data: barData,
-                options:{"scales":{"yAxes":[{"ticks":{"beginAtZero":true}}]}}
+                options:{
+                    "scales":{
+                        "yAxes":[{
+                            "ticks":{"beginAtZero":true}
+                        }]
+                    },
+                    title:{
+                        display:true,
+                        text:'柱状图'
+                    },
+                    responsive:true,
+                    legend:false,                    
+                }
             });
         })
         
