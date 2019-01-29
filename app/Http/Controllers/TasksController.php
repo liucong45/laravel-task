@@ -7,6 +7,7 @@ use App\Task;
 use App\Repositories\TasksRepository;
 use App\Http\Requests\CreateTaskRequest;
 use App\Http\Requests\UpdateTaskRequest;
+use App\Project;
 
 class TasksController extends Controller
 {
@@ -109,5 +110,13 @@ class TasksController extends Controller
         return response()->json([
             'tasks'=> $this->repo->all(),
         ]);
+    }
+
+    public function chart(){
+        $todo = $this->repo->todoCount();
+        $done = $this->repo->doneCount();
+        $total = $this->repo->total();
+        $name = Project::pluck('name');
+        return view('tasks.chart',compact('todo','done','total','name'));
     }
 }

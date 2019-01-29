@@ -38,14 +38,9 @@ import StepList from './step-list'
             }
         },
         created(){
-            // this.fetchSteps()
             Hub.$on('remove',this.remove)
-            Hub.$on('fetchSteps',this.fetchSteps)
         },
         methods:{
-            fetchSteps(){
-                
-            },
             remove(step){
                 let i = this.steps.indexOf(step)
                 this.steps.splice(i,1)

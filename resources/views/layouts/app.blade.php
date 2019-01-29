@@ -9,8 +9,7 @@
 
     <title>{{ config('app.name', 'Laravel') }}</title>
 
-    <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
+    
 
     <!-- Fonts -->
     {{-- <link rel="dns-prefetch" href="//fonts.gstatic.com"> --}}
@@ -35,6 +34,7 @@
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mr-auto">
                         <li class="navbar-nav mr-auto"><a class="nav-link" href="{{route('tasks.index')}}">所有任务</a></li>
+                        <li class="navbar-nav mr-auto"><a class="nav-link" href="{{route('tasks.chart')}}">图表统计</a></li>
                         <search route-all="{{route('tasks.search')}}"></search>
                         
                     </ul>
@@ -79,5 +79,9 @@
             @yield('content')
         </main>
     </div>
+    <script src="{{ asset('js/app.js') }}"></script>
 </body>
+<!-- Scripts -->
+
+@yield('javascript')
 </html>

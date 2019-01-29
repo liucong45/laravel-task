@@ -47852,7 +47852,7 @@ exports = module.exports = __webpack_require__(13)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -47941,13 +47941,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         };
     },
     created: function created() {
-        // this.fetchSteps()
         __WEBPACK_IMPORTED_MODULE_1__event_bus__["a" /* Hub */].$on('remove', this.remove);
-        __WEBPACK_IMPORTED_MODULE_1__event_bus__["a" /* Hub */].$on('fetchSteps', this.fetchSteps);
     },
 
     methods: {
-        fetchSteps: function fetchSteps() {},
         remove: function remove(step) {
             var i = this.steps.indexOf(step);
             this.steps.splice(i, 1);
@@ -48595,12 +48592,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
         return {
             tasks: [],
-            show: false
+            show: false,
+            load: false,
+            searchStr: ''
         };
     },
 
@@ -48608,18 +48609,39 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         routeAll: String
         // routeFrom:String,
     },
+    computed: {
+        filtered: function filtered() {
+            var search = this.searchStr.trim().toLowerCase();
+            return this.tasks.filter(function (task) {
+                if (task.name.trim().indexOf(search) != -1) {
+                    return true;
+                }
+            });
+        }
+    },
     methods: {
         fetch: function fetch() {
             var _this = this;
 
-            axios.get('' + this.routeAll).then(function (res) {
-                _this.tasks = res.data.tasks;
-                _this.show = true;
-            });
+            if (this.load) {
+                this.show = true;
+            } else {
+                axios.get('' + this.routeAll).then(function (res) {
+                    _this.tasks = res.data.tasks;
+                    _this.show = true;
+                    _this.load = true;
+                });
+            }
         },
         displayGroup: function displayGroup() {
-            this.show = false;
-            alert('ok');
+            var _this2 = this;
+
+            setTimeout(function () {
+                _this2.show = false;
+            }, 1000);
+        },
+        url: function url(task) {
+            return '/tasks/' + task.id + '/steps';
         }
     }
 });
@@ -48636,6 +48658,14 @@ var render = function() {
     _c("form", { staticClass: "form-inline" }, [
       _c("div", { staticClass: "input-group" }, [
         _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.searchStr,
+              expression: "searchStr"
+            }
+          ],
           staticClass: "form-control",
           attrs: {
             type: "text",
@@ -48643,7 +48673,17 @@ var render = function() {
             "aria-label": "search",
             "aria-describedby": "basic-addon1"
           },
-          on: { focus: _vm.fetch, blur: _vm.displayGroup }
+          domProps: { value: _vm.searchStr },
+          on: {
+            focus: _vm.fetch,
+            blur: _vm.displayGroup,
+            input: function($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.searchStr = $event.target.value
+            }
+          }
         }),
         _vm._v(" "),
         _vm._m(0)
@@ -48654,9 +48694,11 @@ var render = function() {
       ? _c(
           "ul",
           { staticClass: "list-group" },
-          _vm._l(_vm.tasks, function(task) {
+          _vm._l(_vm.filtered, function(task) {
             return _c("li", { staticClass: "list-group-item" }, [
-              _vm._v(_vm._s(task.name))
+              _c("a", { attrs: { href: _vm.url(task) } }, [
+                _vm._v(_vm._s(task.name))
+              ])
             ])
           }),
           0
