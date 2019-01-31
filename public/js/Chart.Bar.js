@@ -14,8 +14,7 @@ var barData = {
             "rgb(255, 159, 64)",                        
         ],
         "borderWidth":1
-    }],
-    
+    }],    
 }
 var myBarChart = new Chart(barCharDocument, {
     type: 'bar',

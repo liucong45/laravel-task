@@ -117,7 +117,8 @@ class TasksController extends Controller
         $done = $this->repo->doneCount();
         $total = $this->repo->total();
         $name = Project::pluck('name');
-        $projects = Project::with('tasks')->get()->toArray();
+        $projects = objCountArray(Project::with('tasks')->get());
+        // dd($projects);
         return view('tasks.chart',compact('todo','done','total','name','projects'));
     }
 }
